@@ -46,14 +46,18 @@ func (s *HistoryService) Balance(currency, wallet string, since, until time.Time
 }
 
 type Movement struct {
-	ID          int64 `json:",int"`
-	Currency    string
-	Method      string
-	Type        string
-	Amount      string
-	Description string
-	Status      string
-	Timestamp   string
+	ID               int64   `json:"id"`
+	Txid             int64   `json:"txid"`
+	Currency         string  `json:"currency"`
+	Method           string  `json:"method"`
+	Type             string  `json:"type"`
+	Amount           float64 `json:"amount,string"`
+	Description      string  `json:"description"`
+	Address          string  `json:"address"`
+	Status           string  `json:"status"`
+	Timestamp        float64 `json:"timestamp,string"`
+	TimestampCreated float64 `json:"timestamp_created,string"`
+	Fee              float64 `json:"fee"`
 }
 
 func (s *HistoryService) Movements(currency, method string, since, until time.Time, limit int) ([]Movement, error) {
@@ -88,15 +92,15 @@ func (s *HistoryService) Movements(currency, method string, since, until time.Ti
 }
 
 type PastTrade struct {
-	Price       string
-	Amount      string
-	Timestamp   string
-	Exchange    string
-	Type        string
-	FeeCurrency string `json:"fee_currency"`
-	FeeAmount   string `json:"fee_amount"`
-	TID         int64
-	OrderId     int64 `json:"order_id,int"`
+	Price       float64 `json:"price,string"`
+	Amount      float64 `json:"amount,string"`
+	Timestamp   float64 `json:"timestamp,string"`
+	Exchange    string  `json:"exchange"`
+	Type        string  `json:"type"`
+	FeeCurrency string  `json:"fee_currency"`
+	FeeAmount   float64 `json:"fee_amount,string"`
+	TradeID     int64   `json:"tid"`
+	OrderID     int64   `json:"order_id"`
 }
 
 func (s *HistoryService) Trades(pair string, since, until time.Time, limit int, reverse bool) ([]PastTrade, error) {
